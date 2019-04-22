@@ -1,6 +1,7 @@
 $(document).on("mobileinit", function(){
     $(function(){
-        let API="59dcac51b13ef1e2adad44f77b7fa092"
+        document.location.hash="#main";
+        let API="59dcac51b13ef1e2adad44f77b7fa092";
 
 
         
@@ -98,16 +99,23 @@ $(document).on("mobileinit", function(){
         });
 
         //Añadir una ciudad a "Mis ciudades"
-        let ciudadesguardadas=[];
+         /*let ciudadesguardadas=[];*/
+        let nuevaciudad;
         $("#info").on("dblclick", function(ciudadbn, response){
            /* ciudadesguardadas = JSON.parse(localStorage.getItem("ciudadesguardadas"));
             localStorage.setItem("ciudadesguardadas", JSON.stringify(ciudadesguardadas));*/
     
-            let nuevaciudad="<div class='ciudades'><div class='details'><h6>" + ciudadb + "</h6><h6>"+temp+"º</h6><h5>Latitud: "+ latb+"</h5><h5>Longitud: "+longb+"</h5><h5>Humedad: "+humidity+"</h5><h5>Viento: "+wind+"</h5></div><img src='"+iconsrc+"' class='iconc'></img></div>";
+            nuevaciudad="<div class='ciudades'><div class='details'><h6>" + ciudadb + "</h6><h6>"+temp+"º</h6><h5>Latitud: "+ latb+"</h5><h5>Longitud: "+longb+"</h5><h5>Humedad: "+humidity+"</h5><h5>Viento: "+wind+"</h5></div><img src='"+iconsrc+"' class='iconc'></img></div>";
             $("#ciudadesañadidas").append(nuevaciudad);
 
             /*ciudadesguardadas.push(ciudadbn);
             localStorage.setItem("ciudadesguardadas", JSON.stringify(ciudadesguardadas));*/
+        });
+
+        //Borrar una ciudad de "Mis ciudades"
+        $("#ciudadesañadidas").on("dblclick", ".ciudades", function(){
+            alert("yes");
+            $(this).remove();
         });
 
         //Conseguir localización actual y tiempo
