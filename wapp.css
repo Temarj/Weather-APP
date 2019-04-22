@@ -1,0 +1,173 @@
+.pagina{
+    background-color: rgb(0, 0, 22);
+}
+
+h1{
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    font-family: 'Raleway', sans-serif;
+}
+
+h2{
+    color:grey;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+    font-family: 'Raleway', sans-serif;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    height: 10%;
+    background-color: white;
+}
+
+ol{
+display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    list-style: none;
+    width: 100%;
+    margin: 1em;
+    padding:0;
+}
+li{
+    height: 10%;
+    margin: 0;
+    padding: 0;
+}
+
+.ui-content{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    margin-top: 2em;
+    padding: 0;
+}
+
+#buscador{
+    flex-direction: column;
+    justify-content: center;
+}
+
+#posicion{
+    flex-direction: column;
+    justify-content: center;
+}
+
+#info{
+    flex-direction: column;
+    justify-content: center;
+}
+
+h3{
+    margin: auto;
+    font-family: 'Raleway', sans-serif;
+    color: white;
+}
+h4{
+    margin: auto;
+    font-size: 5em;
+    font-family: 'Raleway', sans-serif;
+    color: white;
+}
+
+h5{
+    margin: auto;
+    font-size: 0.7em;
+    margin: 0;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+#contenido{
+    margin: auto;
+    margin-top: 2em;
+    height: 20em;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border: solid 0.5em white;
+    border-radius: 20px;
+    padding: 2em;
+}
+
+.icon{
+    height: 80%;
+    display: flex;
+    align-self: center;
+}
+
+#info{
+    margin-top:1em;
+}
+
+#contenidob{
+    margin: auto;
+    margin-top: 1em;
+    height: 17em;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border: solid 0.5em white;
+    border-radius: 20px;
+    padding: 2em;
+}
+
+.iconb{
+    height: 80%;
+    display: flex;
+    align-self: center;
+}
+
+
+.ciudades{
+    box-sizing: border-box;
+    border: solid 0.5em white;
+    border-radius: 20px;
+    padding: 2em;
+    width: 40%;
+    margin: 1.5em;
+    display: flex;
+    flex-direction: row;
+}
+
+.details{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+h6{
+    width: 100%;
+    margin: auto;
+    margin-bottom: 1em;
+    font-size: 1em;
+
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+}
+
+.iconc{
+    right:0;
+    width: 30%;
+    display: flex;
+    align-self: center;
+}
+
+@media all and (max-width: 480px){
+    .ciudades{
+        width:80%;
+        margin:auto;
+        padding: 1em;
+    }
+
+
+}
