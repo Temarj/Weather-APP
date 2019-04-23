@@ -2,11 +2,37 @@ $(document).on("mobileinit", function(){
     $(function(){
         document.location.hash="#main";
         let API="59dcac51b13ef1e2adad44f77b7fa092";
-
-
+        let ciudadb;
+        var ciudadesguardadas=[];
+        let nuevaciudad;
         
+
+        //Si hay ciudades guardadas, se añaden automáticamente
+        if(localStorage.length == 0){
+            localStorage.setItem("ciudadesguardadas", JSON.stringify(ciudadesguardadas));       
+        }
+        ciudadesguardadas = JSON.parse(localStorage.getItem("ciudadesguardadas"));
+        for (i=0;i<ciudadesguardadas.length;i++){
+            $.getJSON("http://api.openweathermap.org/data/2.5/weather?q="+ ciudadesguardadas[i] +"&appid=" + API + "&lang=es&units=metric", function(response){
+                    name=response.name;
+                    country=response.country;
+                    latb=response.coord.lat;
+                    longb=response.coord.lon;
+                    temp=response.main.temp;
+                    country=response.sys.country;
+                    weather=response.weather.main;
+                    humidity=response.main.humidity;
+                    wind=response.wind.speed;
+                    icon=response.weather[0].icon;
+                    iconsrc= "pictogramas/" + icon + ".png";
+                    
+                    nuevaciudad="<div class='ciudades'><div class='details'><h6> " + name + " "+country+"</h6><h6>"+temp+"º</h6><h5>Latitud: "+ latb+"</h5><h5>Longitud: "+longb+"</h5><h5>Humedad: "+humidity+"</h5><h5>Viento: "+wind+"</h5></div><img src='"+iconsrc+"' class='iconc'></img></div>";
+                    $("#ciudadesañadidas").append(nuevaciudad);                             
+            });
+        }
+
         //Ejercicio swipe reciclado
-        $(document).on('swipeleft', '.ui-page', function(event){
+        $(document).on('swipeleft', '.ui-page', function(){
             let sig = $.mobile.activePage.next('[data-role="page"]'); 
             let ant = $(this).prev('[data-role="page"]');
             let left = $("#main").prev('[data-role="page"]');
@@ -67,15 +93,15 @@ $(document).on("mobileinit", function(){
         });
 
         //Visualizar ciudad buscada
-        let ciudadb;
         $("#autocomplete").on ("click", ".elem", function(){
             $("ul").hide();
             $("#contenidob").show();
-            ciudadb=$(this).html();
-            var resp= ciudadb.split(",");
-            let ciudadbn=resp[0];
 
-            $("#nombreb").html(ciudadb);
+            ciudadb= $(this).html();
+            var resp= ciudadb.split(",");
+            var ciudadbn=resp[0];
+
+            $("#nombreb").html(' '+ciudadbn+' ' + country);
 
             $.getJSON("http://api.openweathermap.org/data/2.5/weather?q="+ ciudadbn +"&appid=" + API + "&lang=es&units=metric", function(response){
                 latb=response.coord.lat;
@@ -87,7 +113,7 @@ $(document).on("mobileinit", function(){
                 wind=response.wind.speed;
                 icon=response.weather[0].icon;
                 iconsrc= "pictogramas/" + icon + ".png";
-                
+                $("#nombre").html(' '+ciudadbn+ ' ' + country);
                 $("#latvalb").html("Latitud: " + latb);
                 $("#longvalb").html("Longitud: " + longb);
                 $(".tempb").html(temp + "º");
@@ -98,24 +124,35 @@ $(document).on("mobileinit", function(){
 
         });
 
-        //Añadir una ciudad a "Mis ciudades"
-         /*let ciudadesguardadas=[];*/
-        let nuevaciudad;
-        $("#info").on("dblclick", function(ciudadbn, response){
-           /* ciudadesguardadas = JSON.parse(localStorage.getItem("ciudadesguardadas"));
-            localStorage.setItem("ciudadesguardadas", JSON.stringify(ciudadesguardadas));*/
-    
-            nuevaciudad="<div class='ciudades'><div class='details'><h6>" + ciudadb + "</h6><h6>"+temp+"º</h6><h5>Latitud: "+ latb+"</h5><h5>Longitud: "+longb+"</h5><h5>Humedad: "+humidity+"</h5><h5>Viento: "+wind+"</h5></div><img src='"+iconsrc+"' class='iconc'></img></div>";
+        //Añadir una ciudad a "Mis ciudades" (y almacenarla en el localStorage)
+        $("#info").on("dblclick", function(){
+            
+            ciudadesguardadas=JSON.parse(localStorage.getItem("ciudadesguardadas"));
+            let cajaciudad = $(this).html();
+            let rec = cajaciudad.split(' ');
+            let newciudadbn = rec[17];
+            nuevaciudad="<div class='ciudades'><div class='details'><h6>" + newciudadbn +" "+ country+ "</h6><h6>"+temp+"º</h6><h5>Latitud: "+ latb+"</h5><h5>Longitud: "+longb+"</h5><h5>Humedad: "+humidity+"</h5><h5>Viento: "+wind+"</h5></div><img src='"+iconsrc+"' class='iconc'></img></div>";
             $("#ciudadesañadidas").append(nuevaciudad);
+            
+            ciudadesguardadas.push(newciudadbn);
 
-            /*ciudadesguardadas.push(ciudadbn);
-            localStorage.setItem("ciudadesguardadas", JSON.stringify(ciudadesguardadas));*/
+            localStorage.setItem("ciudadesguardadas", JSON.stringify(ciudadesguardadas));           
         });
 
         //Borrar una ciudad de "Mis ciudades"
         $("#ciudadesañadidas").on("dblclick", ".ciudades", function(){
-            alert("yes");
             $(this).remove();
+            ciudadesguardadas=JSON.parse(localStorage.getItem("ciudadesguardadas"));
+            let nombre= $(this).html();
+            let nombrec= nombre.split(' ');
+            
+            ciudadesguardadas= $.grep(ciudadesguardadas, function(value){
+                return value != nombrec[2];
+                
+            });
+            
+            localStorage.setItem("ciudadesguardadas", JSON.stringify(ciudadesguardadas));
+        
         });
 
         //Conseguir localización actual y tiempo
