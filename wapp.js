@@ -101,7 +101,7 @@ $(document).on("mobileinit", function(){
             var resp= ciudadb.split(",");
             var ciudadbn=resp[0];
 
-            $("#nombreb").html(' '+ciudadbn+' ' + country);
+            $("#nombreb").html(' '+ciudadbn+' ');
 
             $.getJSON("http://api.openweathermap.org/data/2.5/weather?q="+ ciudadbn +"&appid=" + API + "&lang=es&units=metric", function(response){
                 latb=response.coord.lat;
@@ -119,7 +119,8 @@ $(document).on("mobileinit", function(){
                 $(".tempb").html(temp + "º");
                 $(".humedadb").html("Humedad: " + humidity + "%");
                 $(".vientob").html("Viento: " + wind + " m/s");  
-                $(".iconb").attr("src", iconsrc);                               
+                $(".iconb").attr("src", iconsrc);
+                $("#nombreb").html(' '+ciudadbn+' '+country);                            
             })
 
         });
