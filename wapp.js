@@ -11,7 +11,8 @@ $(document).on("mobileinit", function(){
         if(localStorage.length == 0){
             localStorage.setItem("ciudadesguardadas", JSON.stringify(ciudadesguardadas));       
         }
-        ciudadesguardadas = JSON.parse(localStorage.getItem("ciudadesguardadas"));
+
+        //ciudadesguardadas = JSON.parse(localStorage.getItem("ciudadesguardadas"));
         for (i=0;i<ciudadesguardadas.length;i++){
             $.getJSON("http://api.openweathermap.org/data/2.5/weather?q="+ ciudadesguardadas[i] +"&appid=" + API + "&lang=es&units=metric", function(response){
                     name=response.name;
@@ -62,6 +63,7 @@ $(document).on("mobileinit", function(){
         //Buscar ciudad
         $("#contenidob").hide();
         $( "#autocomplete" ).on( "filterablebeforefilter", function ( e, data ) {
+            ciudadesguardadas = JSON.parse(localStorage.getItem("ciudadesguardadas"));
             $("ul").show();
             var $ul = $( this ),
             $input = $( data.input ),
