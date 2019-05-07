@@ -12,7 +12,7 @@ $(document).on("mobileinit", function(){
             localStorage.setItem("ciudadesguardadas", JSON.stringify(ciudadesguardadas));       
         }
 
-        //ciudadesguardadas = JSON.parse(localStorage.getItem("ciudadesguardadas"));
+        ciudadesguardadas = JSON.parse(localStorage.getItem("ciudadesguardadas"));
         for (i=0;i<ciudadesguardadas.length;i++){
             $.getJSON("http://api.openweathermap.org/data/2.5/weather?q="+ ciudadesguardadas[i] +"&appid=" + API + "&lang=es&units=metric", function(response){
                     name=response.name;
